@@ -1,4 +1,5 @@
 using System;
+using Math;
 
 namespace Standards
 {
@@ -16,12 +17,103 @@ namespace Standards
             }
         }
 
-        public static void Summarize(string operation, double[] nums, double result)
+        public static double GetSlope()
         {
-            Std.Write("Calculation completed.");
-            Std.Write($"Operation-Type: {operation}");
-            Std.Write($"Expression: {nums[0]} {operation} {nums[1]}");
-            Std.Write($"Result: {result}");
+            double slope;
+
+            while (true)
+            {
+                Console.Write("Enter the slope: ");
+                try
+                {
+                    bool parsable = double.TryParse(Console.ReadLine() ?? "", out slope);
+                    if (!parsable)
+                    {
+                        throw new FormatException("The slope must be a double format.");
+                    }
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"*{e.Message}");
+                    Console.WriteLine("Error caught as described above. Please try again.");
+                }
+
+            }
+
+            return slope;
+        }
+
+        public static double GetIntercept()
+        {
+
+            double intercept;
+
+            while (true)
+            {
+                Console.Write("Enter the intercept: ");
+                try
+                {
+                    bool parsable = double.TryParse(Console.ReadLine() ?? "", out intercept);
+                    if (!parsable)
+                    {
+                        throw new FormatException("The intercept must be a double format.");
+                    }
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"*{e.Message}");
+                    Console.WriteLine("Error caught as described above. Please try again.");
+                }
+
+            }
+
+            return intercept;
+        }
+
+        public static double GetValueToEvaluate()
+        {
+
+            double value;
+
+            while (true)
+            {
+                Console.Write("Enter the value to evaluate: ");
+                try
+                {
+                    bool parsable = double.TryParse(Console.ReadLine() ?? "", out value);
+                    if (!parsable)
+                    {
+                        throw new FormatException("The value must be a double format.");
+                    }
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"*{e.Message}");
+                    Console.WriteLine("Error caught as described above. Please try again.");
+                }
+
+            }
+
+            return value;
+        }
+
+        public static void SummarizeEvaluation(LinearFunction linearFunction, double value)
+        {
+            Std.Write("[O] Evaluation completed.");
+            Std.Write($"\tFunction Expression: f(x) = {linearFunction.GetSlope()}x + {linearFunction.GetIntercept()}");
+            Std.Write($"\tValue to Evaluate: {value}");
+            Std.Write($"\tResult: {linearFunction.Evaluate(value)}");
+        }
+
+        public static void SummarizeCalculation(string operation, double[] nums, double result)
+        {
+            Std.Write("[O] Calculation completed.");
+            Std.Write($"\tOperation-Type: {operation}");
+            Std.Write($"\tExpression: {nums[0]} {operation} {nums[1]}");
+            Std.Write($"\tResult: {result}");
         }
         public static string GetOperationOption()
         {
@@ -96,14 +188,14 @@ namespace Standards
                     nums[1] = temp;
                     if (operation.Equals("/") && nums[1] == 0)
                     {
-                        throw new DivideByZeroException("The denominator cannot be set to zero. Please try again.");
+                        throw new DivideByZeroException("The denominator cannot be set to zero.");
                     }
                     break;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine($"*{e.Message}");
-                    Console.WriteLine("Invliad numeric value. Please enter valid number.");
+                    Console.WriteLine("Error caught as described above. Please try again.");
                 }
             }
 
