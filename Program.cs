@@ -9,17 +9,29 @@ class Program
     static void _Debug()
     {
         string operation = Std.GetOperationOption();
-        Console.WriteLine($"You have chosen '{operation}' as your operation.");
-        double[] numbers = Std.GetTwoNumbersList();
-        Console.Write("You have entered two integers: ");
-        foreach (int number in numbers)
-        {
-            Console.Write(number);
-        }
-        Console.WriteLine("\n");
+        double[] numbers = Std.GetTwoNumbersList(operation);
+        double result = 0;
 
-        double result = Operation.Add(numbers[0], numbers[1]);
-        Console.WriteLine($"OP: {operation}, NUMS: {numbers[0]},{numbers[1]}, RESULT: {result}");
+        switch (operation)
+        {
+            case "+":
+                result = Operation.Add(numbers[0], numbers[1]);
+                break;
+            case "-":
+                result = Operation.Subtract(numbers[0], numbers[1]);
+                break;
+            case "*":
+                result = Operation.Multiply(numbers[0], numbers[1]);
+                break;
+            case "/":
+                result = Operation.Divide(numbers[0], numbers[1]);
+                break;
+            default:
+                break;
+        }
+
+
+        Std.Summarize(operation, numbers, result);
     }
     static void Main(string[] args)
     {
